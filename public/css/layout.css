@@ -1,5 +1,5 @@
 body {
-    background-color: #fc702a;
+    background-color: #4682b4;
     font-family: Sans-Serif;
     text-align: center;
     color: white;
@@ -50,7 +50,7 @@ button:hover {
   color: green;
 }
 .medium-usage {
-  color: black;
+  color: orange;
 }
 .high-usage {
   color: red;
