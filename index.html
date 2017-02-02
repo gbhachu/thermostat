@@ -5,33 +5,42 @@
         <title>Thermostat</title>
         <script src="src/thermostat.js"></script>
         <script src="src/jquery-3.1.1.js"></script>
-        <link rel="stylesheet" type="text/css" href="public/css/layout.css" media="screen" />
+        <link rel="stylesheet" type="text/css" href="public/css/layout.css" media="screen"/>
         <script>
 
-          $(document).ready(function(){
-            $('#temperature-up').click(function(){
-              thermostat.increase();
+            $(document).ready(function () {
+                updateTemperature();
 
+                $('#temperature-up').click(function () {
+                    thermostat.increase();
+                    updateTemperature();
+                });
+
+                $('#temperature-down').click(function () {
+                    thermostat.decrease();
+                    updateTemperature();
+                });
+
+                $('#temperature-reset').click(function () {
+                    thermostat.reset();
+                    updateTemperature();
+                });
+
+                $('#powersaving-on').click(function () {
+                    thermostat.powerSaveOn();
+                    updateTemperature();
+                });
+
+                $('#powersaving-off').click(function () {
+                    thermostat.powerSaveOff();
+                });
+
+                function updateTemperature() {
+                    $('#currenttemp').text(thermostat.getCurrentTemp());
+                    $('#currenttemp').attr('class', thermostat.energyUsage());
+                }
 
             });
-            $('#temperature-down').click(function(){
-              thermostat.decrease();
-            });
-            $('#temperature-reset').click(function(){
-              thermostat.reset();
-            });
-            $('#powersaving-on').click(function(){
-              thermostat.powerSaveOn();
-            });
-            $('#powersaving-off').click(function(){
-              thermostat.powerSaveOff();
-            });
-
-
-          });
-
-
-
         </script>
     </head>
     <br>
@@ -45,29 +54,25 @@
                 <button id="temperature-down">-</button>
                 <br>
                 <button id="temperature-reset">Reset Temp</button>
-
-
                 <br>
                 <button id="powersaving-on">PSM on</button>
                 <button id="powersaving-off">PSM off</button>
                 <br>
             </p>
-            <p1>
-              Current Temperature:
-              <script>
-              document.write(thermostat.getCurrentTemp())
+            Current temp
+            <p1 id="currenttemp"></p1>
 
-
-              </script>
-            </p1><br><br><br>
+            <br><br><br>
             <p2>
-              PowerSave is <span id="power-saving-status"><b>ON</b></span>
+                PowerSave on?
+                <span id="power-saving-status">
+                    <b></span>
+                    <script>
+                        document.write(thermostat.isPowerSave())
+                    </script>
+                </p2><br><br><br>
+            </section>
 
+        </body>
 
-            </p2>
-        </section>
-
-
-    </body>
-
-</html>
+    </html>
