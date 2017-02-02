@@ -7,9 +7,31 @@
         <script src="src/jquery-3.1.1.js"></script>
         <link rel="stylesheet" type="text/css" href="public/css/layout.css" media="screen" />
         <script>
-        $(document).ready(function(){
 
-        });
+          $(document).ready(function(){
+            $('#temperature-up').click(function(){
+              thermostat.increase();
+
+
+            });
+            $('#temperature-down').click(function(){
+              thermostat.decrease();
+            });
+            $('#temperature-reset').click(function(){
+              thermostat.reset();
+            });
+            $('#powersaving-on').click(function(){
+              thermostat.powerSaveOn();
+            });
+            $('#powersaving-off').click(function(){
+              thermostat.powerSaveOff();
+            });
+
+
+          });
+
+
+
         </script>
     </head>
     <br>
@@ -31,7 +53,12 @@
                 <br>
             </p>
             <p1>
-              Current Temp: <span id="getCurrentTemp"><b>20</b>
+              Current Temperature:
+              <script>
+              document.write(thermostat.getCurrentTemp())
+
+
+              </script>
             </p1><br><br><br>
             <p2>
               PowerSave is <span id="power-saving-status"><b>ON</b></span>
