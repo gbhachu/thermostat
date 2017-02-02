@@ -58,6 +58,16 @@ describe('When power saving mode - off', function() {
         expect(thermostat.getCurrentTemp()).toEqual(32);
 
     });
+
+    it('PSM sets temperature back to 25 degrees if higher', function() {
+        thermostat.powerSaveOff();
+        for (var i = 0; i <= 13; i++) {
+            thermostat.increase();
+        }
+        thermostat.powerSaveOn()
+        expect(thermostat.getCurrentTemp()).toEqual(25);
+
+    });
 });
 
 describe('displaying usage levels', function() {
