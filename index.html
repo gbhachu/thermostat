@@ -1,81 +1,113 @@
 <!DOCTYPE html>
 <html>
 
-    <head>
-        <title>Thermostat</title>
-        <script src="src/thermostat.js"></script>
-        <script src="src/jquery-3.1.1.js"></script>
-        <link rel="stylesheet" type="text/css" href="public/css/layout.css" media="screen"/>
-        <script>
+<head>
+    <title>Thermostat</title>
+    <script src="src/thermostat.js"></script>
+    <script src="src/jquery-3.1.1.js"></script>
+    <link rel="stylesheet" type="text/css" href="public/css/layout.css" media="screen" />
+    <script>
+        $(document).ready(function() {
+            updateTemperature();
+            updatePowerSaveStatus();
 
-            $(document).ready(function () {
+            $('#temperature-up').click(function() {
+                thermostat.increase();
+                updateTemperature();
+            });
+
+            $('#temperature-down').click(function() {
+                thermostat.decrease();
+                updateTemperature();
+            });
+
+            $('#temperature-reset').click(function() {
+                thermostat.reset();
+                updateTemperature();
+            });
+
+            $('#powersaving-on').click(function() {
+                thermostat.powerSaveOn();
                 updateTemperature();
                 updatePowerSaveStatus();
-
-                $('#temperature-up').click(function () {
-                    thermostat.increase();
-                    updateTemperature();
-                });
-
-                $('#temperature-down').click(function () {
-                    thermostat.decrease();
-                    updateTemperature();
-                });
-
-                $('#temperature-reset').click(function () {
-                    thermostat.reset();
-                    updateTemperature();
-                });
-
-                $('#powersaving-on').click(function () {
-                    thermostat.powerSaveOn();
-                    updateTemperature();
-                    updatePowerSaveStatus();
-                });
-
-                $('#powersaving-off').click(function () {
-                    thermostat.powerSaveOff();
-                    updatePowerSaveStatus();
-                });
-
-                function updateTemperature() {
-                    $('#currenttemp').text('Current temp ' + thermostat.getCurrentTemp());
-                    $('#currenttemp').attr('class', thermostat.energyUsage());
-                }
-                function updatePowerSaveStatus(){
-                  $('#powersave').text('PowerSave on? ' + thermostat.isPowerSave());
-                }
-
             });
-        </script>
-    </head>
-    <br>
 
-    <body>
+            $('#powersaving-off').click(function() {
+                thermostat.powerSaveOff();
+                updatePowerSaveStatus();
+            });
+
+            function updateTemperature() {
+                $('#currenttemp').text('Current temp ' + thermostat.getCurrentTemp());
+                $('#currenttemp').attr('class', thermostat.energyUsage());
+            }
+
+            function updatePowerSaveStatus() {
+                $('#powersave').text('PowerSave on? ' + thermostat.isPowerSave());
+            }
+
+
+
+
+
+            displayWeather('London');
+
+            $('#select-city').submit(function(event) {
+              event.preventDefault();
+              var city = $('#current-city').val();
+              displayWeather(city);
+            })
+
+
+            function displayWeather(city) {
+              var url = 'http://api.openweathermap.org/data/2.5/weather?q=' + city;
+              var token = '&appid=e0e232c9ccf7239ef0d0c8ed68985f2a';
+              var units = '&units=metric';
+              $.get(url + token + units, function(data) {
+                $('#current-temperature').text(data.main.temp);
+
+              })
+            }
+
+
+          });
+    </script>
+</head>
+<br>
+
+<body>
+    <section>
+        <h1>Thermostat HUB</h1>
+        <p>
+            <button id="temperature-up">+</button>
+            <button id="temperature-down">-</button>
+            <br>
+            <button id="temperature-reset">Reset Temp</button>
+            <br>
+            <button id="powersaving-on">PSM on</button>
+            <button id="powersaving-off">PSM off</button>
+            <br>
+        </p>
+        <p1 id="currenttemp"></p1>
+
+        <br><br><br>
+        <p2 id="powersave"></p2><br><br><br>
         <section>
-            <h1>Thermostat HUB</h1>
-            <p>
-                <button id="temperature-up">+</button>
-                <br>
-                <button id="temperature-down">-</button>
-                <br>
-                <button id="temperature-reset">Reset Temp</button>
-                <br>
-                <button id="powersaving-on">PSM on</button>
-                <button id="powersaving-off">PSM off</button>
-                <br>
-            </p>
-            <p1 id="currenttemp"></p1>
+            <h1>Current temperature: <span id="current-temperature"/span></h1>
+                <select id="current-city">
+                  <option value="london">London</option>
+                  <option value="newyork">New York</option>
+                  <option value="paris">Paris</option>
+                  <option value="tokyo">Tokyo</option>
+                </select>
+        </section>
 
-            <br><br><br>
-            <p2 id="powersave">
 
-            </p2><br><br><br>
-            </section>
-            <h2>BhachHeatingSolutions</h2>
-            <h3>Keeping your Home Warm!</h3>
-<img src="http://ec.europa.eu/energy/sites/ener/files/1consumer_rights.jpg" alt="Energy" style="width:304px;height:228px;">
+    </section>
+    <h2>BhachHeatingSolutions</h2>
+    <h3>Keeping your Home Warm!</h3>
+    <img src="http://ec.europa.eu/energy/sites/ener/files/1consumer_rights.jpg" alt="Energy" style="width:304px;height:228px;">
 
-        </body>
+</body>
 
-    </html>
+</html>
