@@ -4,73 +4,12 @@
 <head>
     <title>Thermostat</title>
     <script src="src/thermostat.js"></script>
+
     <script src="src/jquery-3.1.1.js"></script>
+    <script src="src/interface.js"></script>
     <link rel="stylesheet" type="text/css" href="public/css/layout.css" media="screen" />
     <script>
-        $(document).ready(function() {
-            updateTemperature();
-            updatePowerSaveStatus();
 
-            $('#temperature-up').click(function() {
-                thermostat.increase();
-                updateTemperature();
-            });
-
-            $('#temperature-down').click(function() {
-                thermostat.decrease();
-                updateTemperature();
-            });
-
-            $('#temperature-reset').click(function() {
-                thermostat.reset();
-                updateTemperature();
-            });
-
-            $('#powersaving-on').click(function() {
-                thermostat.powerSaveOn();
-                updateTemperature();
-                updatePowerSaveStatus();
-            });
-
-            $('#powersaving-off').click(function() {
-                thermostat.powerSaveOff();
-                updatePowerSaveStatus();
-            });
-
-            function updateTemperature() {
-                $('#currenttemp').text('Current temp ' + thermostat.getCurrentTemp());
-                $('#currenttemp').attr('class', thermostat.energyUsage());
-            }
-
-            function updatePowerSaveStatus() {
-                $('#powersave').text('PowerSave on? ' + thermostat.isPowerSave());
-            }
-
-
-
-
-
-            displayWeather('London');
-
-            $('#select-city').submit(function(event) {
-              event.preventDefault();
-              var city = $('#current-city').val();
-              displayWeather(city);
-            })
-
-
-            function displayWeather(city) {
-              var url = 'http://api.openweathermap.org/data/2.5/weather?q=' + city;
-              var token = '&appid=e0e232c9ccf7239ef0d0c8ed68985f2a';
-              var units = '&units=metric';
-              $.get(url + token + units, function(data) {
-                $('#current-temperature').text(data.main.temp);
-
-              })
-            }
-
-
-          });
     </script>
 </head>
 <br>
@@ -93,14 +32,14 @@
         <br><br><br>
         <p2 id="powersave"></p2><br><br><br>
         <section>
-            <h1>Current temperature: <span id="current-temperature"/span></h1>
-                <select id="current-city">
-                  <option value="london">London</option>
-                  <option value="newyork">New York</option>
-                  <option value="paris">Paris</option>
-                  <option value="tokyo">Tokyo</option>
-                </select>
+
+            <h1>Current temperature: <span id="current-temperature">20</span></h1>
+            <form id="select-city">
+                <input id="current-city" type="text" placeholder="Enter a city"></input>
+                <input type="submit"></input>
+            </form>
         </section>
+    </section>
 
 
     </section>
